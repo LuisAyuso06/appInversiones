@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet", href="/css/styles.css")
+  body
+    h1= title
+    ul
+      each inversion in inversiones
+        li
+          a(href=`/simular/${inversion.id}`)= inversion.nombre

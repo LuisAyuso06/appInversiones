@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet", href="/css/styles.css")
+  body
+    h1= title
+    form(action="/resultado", method="POST")
+      input(type="hidden", name="inversionId", value=inversionId)
+      label(for="monto") Monto Inicial (MXN):
+      input(type="number", name="monto", required)
+      label(for="plazo") Plazo (meses):
+      input(type="number", name="plazo", required)
+      label(for="tasa") Tasa de Interés Anual (%):
+      input(type="number", step="0.01", name="tasa", required)
+      button(type="submit") Calcular
