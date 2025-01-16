@@ -1,0 +1,22 @@
+[
+    {
+      "type": "acciones",
+      "rate": 0.07
+    },
+    {
+      "type": "bonos",
+      "rate": 0.03
+    },
+    {
+      "type": "bienes-raices",
+      "rate": 0.05
+    },
+    {
+      "type": "metales",
+      "rate": 0.02
+    },
+    {
+      "type": "criptomonedas",
+      "rate": 0.15
+    }
+  ]
