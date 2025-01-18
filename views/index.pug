@@ -4,25 +4,26 @@ html
     title= title
     link(rel='stylesheet', href='/styles/scripts/main.css')
     script(src='https://cdn.jsdelivr.net/npm/chart.js')
+    script(src='/styles/scripts/main.js')
   body
     header
       h1 Simulador de Inversiones
     main
       form#investment-form
         label(for='investment-type') Tipo de Inversión
-        select#investment-type(name='investment-type')
+        select#investment-type(name='investmentType')
           option(value='acciones') Acciones
           option(value='bonos') Bonos
           option(value='bienes-raices') Bienes Raíces
           option(value='metales') Metales Preciosos
           option(value='criptomonedas') Criptomonedas
         label(for='initial-amount') Monto Inicial
-        input#initial-amount(type='number', name='initial-amount', placeholder='Monto inicial')
+        input#initial-amount(type='number', name='initialAmount', placeholder='Monto inicial')
         label(for='monthly-contribution') Aportación Mensual
-        input#monthly-contribution(type='number', name='monthly-contribution', placeholder='Aportación mensual')
+        input#monthly-contribution(type='number', name='monthlyContribution', placeholder='Aportación mensual')
         label(for='duration') Duración (años)
         input#duration(type='number', name='duration', placeholder='Duración en años')
-        button(type='submit') Simular
+        button#simulate-btn(type='button') Simular
       section#results
         h2 Resultados de la Simulación
         canvas#investment-chart(width='400', height='200')

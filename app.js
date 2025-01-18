@@ -18,45 +18,63 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
+  console.log(req);
+  
   res.render('index', { title: 'Simulador de Inversiones' });
 });
 
 // Ruta para obtener datos de inversiones
 app.get('/api/investments', (req, res) => {
+  console.log(res, req)
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'investments.json')));
   res.json(data);
 });
 
-// Ruta para simulación de rendimientos
-app.post('/api/simulate', (req, res) => {
-  const { investments } = req.body;
+app.post('/simulate', (req, res) => {
+  const { investmentType, initialAmount, monthlyContribution, duration, rate, inflation } = req.body;
 
-  const results = investments.map((inv) => {
-    const { type, initialAmount, monthlyContribution, duration, rate, inflation } = inv;
-    let total = initialAmount;
-    let totalContributions = 0;
-    const monthlyRate = rate / 12;
-    const adjustedRate = inflation ? monthlyRate - inflation / 12 : monthlyRate;
-
-    for (let i = 0; i < duration * 12; i++) {
-      totalContributions += monthlyContribution;
-      total = (total + monthlyContribution) * (1 + adjustedRate);
-    }
-
-    const annualizedRate = ((total / (initialAmount + totalContributions)) ** (1 / duration) - 1) * 100;
-
-    return {
-      type,
-      initialAmount,
-      totalContributions,
-      total: total.toFixed(2),
-      annualizedRate: annualizedRate.toFixed(2),
-      adjustedRate: adjustedRate.toFixed(4),
-    };
-  });
-
-  res.json(results);
+  try {
+    const results = calculateInvestmentSimulation(investmentType, initialAmount, monthlyContribution, duration, rate, inflation);
+    res.json(results);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
+
+// Ruta para simulación de rendimientos
+function calculateInvestmentSimulation(investmentType, initialAmount, monthlyContribution, duration, rate, inflation) {
+  // Asegurarse de que los valores sean números
+  const initialAmountNum = parseFloat(initialAmount) || 1000;  // Valor por defecto 1000 si no se encuentra
+  const monthlyContributionNum = parseFloat(monthlyContribution) || 100;  // Valor por defecto 100
+  const durationNum = parseInt(duration, 10) || 10;  // Valor por defecto 10 años
+
+  // Lógica de la simulación
+  let total = initialAmountNum;
+  let totalContributions = 0;
+
+  const monthlyRate = rate / 12 || 0.05 / 12;  // Tasa por defecto del 5% anual
+  const adjustedRate = inflation ? monthlyRate - inflation / 12 : monthlyRate;
+
+  // Simulación de la inversión
+  for (let i = 0; i < durationNum * 12; i++) {  // Supone que la duración es en años
+    totalContributions += monthlyContributionNum;
+    total = (total + monthlyContributionNum) * (1 + adjustedRate);  // Aplica el rendimiento mensual ajustado
+  }
+
+  // Calculando la tasa anualizada
+  const annualizedRate = ((total / (initialAmountNum + totalContributions)) ** (1 / durationNum) - 1) * 100;
+
+  // Retornar los resultados
+  return {
+    type: investmentType || 'acciones',  // Valor por defecto 'acciones' si no se encuentra
+    initialAmount: initialAmountNum,
+    totalContributions: totalContributions,
+    total: total.toFixed(2),
+    annualizedRate: annualizedRate.toFixed(2),
+  };
+}
+
+
 
 // Iniciar servidor
 app.listen(PORT, () => {
