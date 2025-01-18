@@ -3,6 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/styles/scripts/main.css')
+    script(src='https://cdn.jsdelivr.net/npm/chart.js')
   body
     header
       h1 Simulador de Inversiones
@@ -15,8 +16,6 @@ html
           option(value='bienes-raices') Bienes Raíces
           option(value='metales') Metales Preciosos
           option(value='criptomonedas') Criptomonedas
-          option(value='bitcoin') Bitcoin 
-          option(value='ethereum') Ethereum
         label(for='initial-amount') Monto Inicial
         input#initial-amount(type='number', name='initial-amount', placeholder='Monto inicial')
         label(for='monthly-contribution') Aportación Mensual
@@ -24,5 +23,18 @@ html
         label(for='duration') Duración (años)
         input#duration(type='number', name='duration', placeholder='Duración en años')
         button(type='submit') Simular
+      section#results
+        h2 Resultados de la Simulación
+        canvas#investment-chart(width='400', height='200')
+        table#results-table
+          thead
+            tr
+              th Tipo de Inversión
+              th Monto Inicial
+              th Aportaciones Totales
+              th Rendimiento Total
+              th Valor Final
+              th Tasa Anualizada
+          tbody
     footer
       p © 2025 Simulador de Inversiones

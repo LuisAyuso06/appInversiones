@@ -1,3 +1,5 @@
+// Archivo principal del backend: app.js
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -15,63 +17,58 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rutas principales
 app.get('/', (req, res) => {
   res.render('index', { title: 'Simulador de Inversiones' });
 });
 
+// Ruta para obtener datos de inversiones
 app.get('/api/investments', (req, res) => {
-  // Carga datos de ejemplo desde un archivo JSON
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'investments.json')));
   res.json(data);
 });
 
+// Ruta para simulación de rendimientos
 app.post('/api/simulate', (req, res) => {
   const { investments } = req.body;
 
   const results = investments.map((inv) => {
-    const { type, initialAmount, monthlyContribution, duration, rate } = inv;
+    const { type, initialAmount, monthlyContribution, duration, rate, inflation } = inv;
     let total = initialAmount;
+    let totalContributions = 0;
+    const monthlyRate = rate / 12;
+    const adjustedRate = inflation ? monthlyRate - inflation / 12 : monthlyRate;
 
-    // Simulación de rendimiento promedio histórico
     for (let i = 0; i < duration * 12; i++) {
-      total = (total + monthlyContribution) * (1 + rate / 12);
+      totalContributions += monthlyContribution;
+      total = (total + monthlyContribution) * (1 + adjustedRate);
     }
 
-    // Ajuste por inflación (asumiendo 2% anual)
-    const inflationRate = 0.02;
-    const adjustedTotal = total / Math.pow(1 + inflationRate, duration);
-
-    // Simulación de Monte Carlo
-    const monteCarloSimulations = 1000;
-    const monteCarloResults = [];
-    for (let i = 0; i < monteCarloSimulations; i++) {
-      let mcTotal = initialAmount;
-      for (let j = 0; j < duration * 12; j++) {
-        const randomRate = rate + (Math.random() - 0.5) * 0.1; // Variación aleatoria
-        mcTotal = (mcTotal + monthlyContribution) * (1 + randomRate / 12);
-      }
-      monteCarloResults.push(mcTotal);
-    }
-
-    // Cálculo de estadísticas de Monte Carlo
-    const averageMonteCarlo = monteCarloResults.reduce((a, b) => a + b, 0) / monteCarloSimulations;
+    const annualizedRate = ((total / (initialAmount + totalContributions)) ** (1 / duration) - 1) * 100;
 
     return {
       type,
       initialAmount,
+      totalContributions,
       total: total.toFixed(2),
-      adjustedTotal: adjustedTotal.toFixed(2),
-      monteCarloAverage: averageMonteCarlo.toFixed(2),
-      rate,
+      annualizedRate: annualizedRate.toFixed(2),
+      adjustedRate: adjustedRate.toFixed(4),
     };
   });
 
   res.json(results);
 });
 
-
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+
+// console.log('Datos recibidos para simulación:', investments);
+// console.log({
+//   type,
+//   initialAmount,
+//   monthlyContribution,
+//   duration,
+//   rate: 0.07,
+//   inflation: 0.02,
+// });

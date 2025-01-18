@@ -13,24 +13,53 @@ document.getElementById('investment-form').addEventListener('submit', async (e) 
     },
     body: JSON.stringify({
       investments: [
-        { type, initialAmount, monthlyContribution, duration, rate: 0.07 },
+        { type, initialAmount, monthlyContribution, duration, rate: 0.07, inflation: 0.02 },
       ],
     }),
   });
 
   const results = await response.json();
-
-  const resultContainer = document.createElement('div');
-  resultContainer.innerHTML = `
-    <h3>Resultados de la Simulación</h3>
-    <p>Inversión: ${results[0].type}</p>
-    <p>Monto Inicial: $${results[0].initialAmount}</p>
-    <p>Total sin ajustar: $${results[0].total}</p>
-    <p>Total ajustado por inflación: $${results[0].adjustedTotal}</p>
-    <p>Promedio Monte Carlo: $${results[0].monteCarloAverage}</p>
-  `;
-
-  document.body.appendChild(resultContainer);
+  renderResults(results);
 });
 
-  
+function renderResults(results) {
+  const ctx = document.getElementById('investment-chart').getContext('2d');
+  const labels = results.map((r) => r.type);
+  const data = results.map((r) => r.total);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Valor Final de la Inversión',
+        data,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  const tableBody = document.querySelector('#results-table tbody');
+  tableBody.innerHTML = '';
+  results.forEach((r) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${r.type}</td>
+      <td>${r.initialAmount}</td>
+      <td>${r.totalContributions}</td>
+      <td>${(r.total - r.initialAmount - r.totalContributions).toFixed(2)}</td>
+      <td>${r.total}</td>
+      <td>${r.annualizedRate}%</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}

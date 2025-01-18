@@ -1,17 +1,16 @@
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
-  color: #4CAF50;
+  background-color: #F3F4F6;
+  color: #1F2937;
 }
 
 header {
-  background-color: #4CAF50;
+  background-color: #1E3A8A;
   color: #ffffff;
   padding: 1.5rem;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 header h1 {
   margin: 0;
@@ -19,13 +18,11 @@ header h1 {
 }
 
 main {
-  margin: 2rem auto;
-  max-width: 600px;
-  padding: 1.5rem;
+  margin: 2rem;
+  padding: 1rem;
   background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 form {
@@ -33,40 +30,64 @@ form {
   flex-direction: column;
   gap: 1rem;
 }
-
-label {
+form label {
   font-weight: bold;
-  color: rgb(45.1155378486, 103.8844621514, 47.4900398406);
 }
-
-input, select, button {
+form input, form select, form button {
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid #1E3A8A;
   border-radius: 5px;
   font-size: 1rem;
 }
-
-input, select {
-  background-color: #f9f9f9;
-}
-
-button {
-  background-color: #4CAF50;
+form button {
+  background-color: #2563EB;
   color: #ffffff;
-  border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-weight: bold;
 }
-
-button:hover {
-  background-color: #81c784;
+#results {
+  margin-top: 2rem;
+}
+#results h2 {
+  color: #1E3A8A;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+#results canvas {
+  margin: 1rem 0;
+  border: 1px solid #60A5FA;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+#results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #1E3A8A;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#results table th, #results table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #60A5FA;
+}
+#results table th {
+  background-color: #1E3A8A;
+  color: #ffffff;
+}
+#results table td {
+  background-color: #F3F4F6;
 }
 
 footer {
-  margin-top: 2rem;
   text-align: center;
-  font-size: 0.875rem;
-  color: rgb(29.6733067729, 68.3266932271, 31.235059761);
+  background-color: #1E3A8A;
+  color: #ffffff;
+  padding: 1rem;
+}
+footer p {
+  margin: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
