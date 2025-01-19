@@ -25,14 +25,22 @@ html
                 option(value='bonos') Bonos
                 option(value='bienes-raices') Bienes Raíces
                 option(value='metales') Metales Preciosos
+                option(value='bitcoin') Bitcoin
+                option(value='Ethereum') Ethereum
+                option(value='dogeCoin') DogeCoin
                 option(value='criptomonedas') Criptomonedas
+                option(value='rentaFija') Renta Fija
+                option(value='rentaVariable') Renta Variable
+                option(value='productosDerivados') Productos Derivados
             .form-group
               label(for='initial-amount') Monto Inicial
               input#initial-amount(type='number', name='initialAmount', placeholder='Monto Inicial')
             .form-group
               label(for='rate-percentage') Porcentaje de Rendimiento
               input#rate-percentage(type='number', name='ratePercentage', placeholder='Porcentaje (%)', min='0', step='0.01')
-
+            .form-group
+              label(for='inflation-percentage') Porcentaje de Inflacion
+              input#inflation-percentage(type='number', name='inflationPercentage', placeholder='Porcentaje de Inflación (%)', min='0', step='0.01')
           .form-row
             .form-group
               label(for='monthly-contribution') Monto de la Aportación

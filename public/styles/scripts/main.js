@@ -12,9 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const durationType = document.getElementById('duration-type').value;
       const duration = parseInt(document.getElementById('duration').value);
       const ratePercentage = parseFloat(document.getElementById('rate-percentage').value) / 100; // Convertir a decimal
-
+      const inflationPercentage = parseFloat(document.getElementById('inflation-percentage').value) /100; 
+      
       // Verificar que todos los campos son válidos
-      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration) || isNaN(ratePercentage)) {
+      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration) || isNaN(ratePercentage)|| isNaN(inflationPercentage)) {
         Swal.fire({
           icon: 'error',
           title: 'Campos inválidos',
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
               durationType: durationType,
               duration: duration,
               rate: ratePercentage, // Enviar el porcentaje de rendimiento
-              inflation: 0.02, // Mantener tasa de inflación constante, puede ser dinámico si se desea
+              inflation:inflationPercentage,
             }),
           });
 

@@ -108,12 +108,4 @@ app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
 
-// console.log('Datos recibidos para simulación:', investments);
-// console.log({
-//   type,
-//   initialAmount,
-//   monthlyContribution,
-//   duration,
-//   rate: 0.07,
-//   inflation: 0.02,
-// });
+
