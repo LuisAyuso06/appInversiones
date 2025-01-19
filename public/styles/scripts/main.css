@@ -28,25 +28,42 @@ main {
 form {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+}
+form .form-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
-form label {
-  font-weight: bold;
+form .form-row .form-group {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
 }
-form input, form select, form button {
+form .form-row .form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+form .form-row .form-group input, form .form-row .form-group select {
   padding: 0.75rem;
   border: 1px solid #1E3A8A;
   border-radius: 5px;
   font-size: 1rem;
 }
 form button {
+  align-self: flex-start;
+  padding: 0.75rem 1.5rem;
   background-color: #2563EB;
   color: #ffffff;
-  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
   font-weight: bold;
+  cursor: pointer;
 }
 #results {
   margin-top: 2rem;
+  color: #1E3A8A;
 }
 #results h2 {
   color: #1E3A8A;

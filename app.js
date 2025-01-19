@@ -33,6 +33,8 @@ app.get('/api/investments', (req, res) => {
 app.post('/simulate', (req, res) => {
   const { investmentType, initialAmount, monthlyContribution, duration, rate, inflation } = req.body;
 
+  console.log({investmentType, initialAmount, monthlyContribution, duration, rate, inflation});
+  
   try {
     const results = calculateInvestmentSimulation(investmentType, initialAmount, monthlyContribution, duration, rate, inflation);
     res.json(results);
