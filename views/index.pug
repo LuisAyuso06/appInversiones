@@ -28,12 +28,30 @@ html
               label(for='initial-amount') Monto Inicial
               input#initial-amount(type='number', name='initialAmount', placeholder='Monto inicial')
             .form-group
-              label(for='monthly-contribution') Aportación Mensual
-              input#monthly-contribution(type='number', name='monthlyContribution', placeholder='Aportación mensual')
+              label(for='rate-percentage') Porcentaje de Rendimiento
+              input#rate-percentage(type='number', name='ratePercentage', placeholder='Porcentaje (%)', min='0', step='0.01')
+
+          .form-row
             .form-group
-              label(for='duration') Duración (años)
-              input#duration(type='number', name='duration', placeholder='Duración en años')
+              label(for='monthly-contribution') Monto de la Aportación
+              input#monthly-contribution(type='number', name='monthlyContribution', placeholder='Monto de la aportación')
+            .form-group
+              label(for='contribution-type') Tipo de Aportación
+              select#contribution-type(name='contributionType')
+                option(value='mensual') Mensual
+                option(value='trimestral') Trimestral
+                option(value='anual') Anual
+            .form-group
+              label(for='duration') Duración
+              input#duration(type='number', name='duration', placeholder='Duración')
+            .form-group
+              label(for='duration-type') Tipo de Duración
+              select#duration-type(name='durationType')
+                option(value='meses') Meses
+                option(value='anios') Años
+                option(value='decadas') Décadas
           button#simulate-btn(type='button') Simular
+
         section#results
           h2 Resultados de la Simulación
           canvas#investment-chart(width='400', height='200')

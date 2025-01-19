@@ -8,10 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const type = document.getElementById('investment-type').value;
       const initialAmount = parseFloat(document.getElementById('initial-amount').value);
       const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value);
+      const contributionType = document.getElementById('contribution-type').value;
+      const durationType = document.getElementById('duration-type').value;
       const duration = parseInt(document.getElementById('duration').value);
+      const ratePercentage = parseFloat(document.getElementById('rate-percentage').value) / 100; // Convertir a decimal
 
       // Verificar que todos los campos son válidos
-      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration)) {
+      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration) || isNaN(ratePercentage)) {
         Swal.fire({
           icon: 'error',
           title: 'Campos inválidos',
@@ -52,9 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
               investmentType: type,
               initialAmount: initialAmount,
               monthlyContribution: monthlyContribution,
+              contributionType: contributionType,
+              durationType: durationType,
               duration: duration,
-              rate: 0.07,
-              inflation: 0.02,
+              rate: ratePercentage, // Enviar el porcentaje de rendimiento
+              inflation: 0.02, // Mantener tasa de inflación constante, puede ser dinámico si se desea
             }),
           });
 
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Renderizar los resultados
           renderResults(results);
-          clearFormFields();
+          // clearFormFields();
         } catch (error) {
           Swal.fire({
             icon: 'error',
@@ -81,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 
  // Función para limpiar los campos del formulario

@@ -43,12 +43,23 @@ app.post('/simulate', (req, res) => {
   }
 });
 
-// Ruta para simulación de rendimientos
-function calculateInvestmentSimulation(investmentType, initialAmount, monthlyContribution, duration, rate, inflation) {
+function calculateInvestmentSimulation(investmentType, initialAmount, monthlyContribution, contributionType, durationType, duration, rate, inflation) {
   // Asegurarse de que los valores sean números
   const initialAmountNum = parseFloat(initialAmount) || 1000;  // Valor por defecto 1000 si no se encuentra
   const monthlyContributionNum = parseFloat(monthlyContribution) || 100;  // Valor por defecto 100
   const durationNum = parseInt(duration, 10) || 10;  // Valor por defecto 10 años
+
+  // Ajustar la duración según el tipo
+  let durationInMonths;
+  if (durationType == 'meses') {
+    durationInMonths = durationNum;
+  } else if (durationType == 'anios') {
+    durationInMonths = durationNum * 12;
+  } else if (durationType == 'decadas') {
+    durationInMonths = durationNum * 12 * 10;
+  } else {
+    durationInMonths = durationNum * 12; // Asumir años si no se especifica
+  }
 
   // Lógica de la simulación
   let total = initialAmountNum;
@@ -57,14 +68,29 @@ function calculateInvestmentSimulation(investmentType, initialAmount, monthlyCon
   const monthlyRate = rate / 12 || 0.05 / 12;  // Tasa por defecto del 5% anual
   const adjustedRate = inflation ? monthlyRate - inflation / 12 : monthlyRate;
 
+  // Ajustar la frecuencia de las contribuciones según el tipo
+  let contributionFrequency;
+  if (contributionType == 'mensual') {
+    contributionFrequency = 1;  // Mensual
+  } else if (contributionType == 'trimestral') {
+    contributionFrequency = 3;  // Trimestral
+  } else if (contributionType == 'anual') {
+    contributionFrequency = 12;  // Anual
+  } else {
+    contributionFrequency = 1;  // Asumir mensual si no se especifica
+  }
+
   // Simulación de la inversión
-  for (let i = 0; i < durationNum * 12; i++) {  // Supone que la duración es en años
-    totalContributions += monthlyContributionNum;
-    total = (total + monthlyContributionNum) * (1 + adjustedRate);  // Aplica el rendimiento mensual ajustado
+  for (let i = 0; i < durationInMonths; i++) {
+    // Añadir contribuciones según el tipo (mensual, trimestral, anual)
+    if (i % contributionFrequency === 0) {
+      totalContributions += monthlyContributionNum;
+      total = (total + monthlyContributionNum) * (1 + adjustedRate);  // Aplica el rendimiento mensual ajustado
+    }
   }
 
   // Calculando la tasa anualizada
-  const annualizedRate = ((total / (initialAmountNum + totalContributions)) ** (1 / durationNum) - 1) * 100;
+  const annualizedRate = ((total / (initialAmountNum + totalContributions)) ** (1 / (durationInMonths / 12)) - 1) * 100;
 
   // Retornar los resultados
   return {
@@ -75,7 +101,6 @@ function calculateInvestmentSimulation(investmentType, initialAmount, monthlyCon
     annualizedRate: annualizedRate.toFixed(2),
   };
 }
-
 
 
 // Iniciar servidor
