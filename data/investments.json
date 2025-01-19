@@ -1,27 +1,18 @@
 [
   {
-    "type": "acciones",
-    "rate": 0.15,
-    "inflation": 0.02
-  },
-  {
     "type": "bonos",
-    "rate": 0.03,
-    "inflation": 0.02
+    "rate": 0.03
   },
   {
     "type": "bienes-raices",
-    "rate": 0.05,
-    "inflation": 0.02
+    "rate": 0.05
   },
   {
     "type": "metales",
-    "rate": 0.02,
-    "inflation": 0.02
+    "rate": 0.02
   },
   {
     "type": "criptomonedas",
-    "rate": 0.15,
-    "inflation": 0.02
+    "rate": 0.15
   }
 ]

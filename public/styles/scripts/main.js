@@ -75,11 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Renderizar los resultados
           renderResults(results);
-          // clearFormFields();
+          clearFormFields();
         } catch (error) {
           Swal.fire({
             icon: 'error',
-            title: 'Error en la simulación',
+            title: 'Error en la simulación'+ error,
             text: 'Ocurrió un problema al procesar la solicitud.',
           });
         }
@@ -96,13 +96,21 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('initial-amount').value = '';
   document.getElementById('monthly-contribution').value = '';
   document.getElementById('duration').value = '';
+  document.getElementById('rate-percentage').value = '';
+  document.getElementById('inflation-percentage').value = '';
 }
 
 
 function renderResults(results) {
   // Mostrar gráfico
   const ctx = document.getElementById('investment-chart').getContext('2d');
-  const labels = [results.type];  // Solo un tipo de inversión en este caso
+  
+  // Verificar si ya existe un gráfico, y destruirlo si es necesario
+  if (window.myChart) {
+    window.myChart.destroy(); // Destruir el gráfico anterior
+  }
+
+  const labels = [results.type];
   const data = [parseFloat(results.total)];
 
   new Chart(ctx, {
