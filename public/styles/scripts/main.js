@@ -25,17 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          investments: [
-            { type, initialAmount, monthlyContribution, duration, rate: 0.07, inflation: 0.02 },
-          ],
+          investmentType: type,
+          initialAmount: initialAmount,
+          monthlyContribution: monthlyContribution,
+          duration: duration,
+          rate: 0.07,
+          inflation: 0.02,
         }),
       });
 
       // Manejar la respuesta
       const results = await response.json();
       console.log(results);
-      
-      // Renderizar los resultados
+
+      // Llamar a la función para renderizar los resultados
       renderResults(results);
     });
   }
