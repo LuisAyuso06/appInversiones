@@ -61,6 +61,10 @@ form button {
   font-weight: bold;
   cursor: pointer;
 }
+form #simulate-btn {
+  margin: auto;
+}
+
 #results {
   margin-top: 2rem;
   color: #1E3A8A;

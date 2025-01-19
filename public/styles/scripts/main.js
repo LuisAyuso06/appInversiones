@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Asegúrate de que el botón existe en el DOM antes de agregar el event listener
   const simulateButton = document.getElementById('simulate-btn');
   if (simulateButton) {
     simulateButton.addEventListener('click', async (e) => {
-      // Prevenir el comportamiento predeterminado de un botón de formulario (si aplica)
       e.preventDefault();
 
       // Obtener los valores de los campos
@@ -12,37 +10,87 @@ document.addEventListener('DOMContentLoaded', () => {
       const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value);
       const duration = parseInt(document.getElementById('duration').value);
 
-      // Verificar que todos los campos son válidos antes de continuar
+      // Verificar que todos los campos son válidos
       if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration)) {
-        alert('Por favor, ingresa valores válidos en todos los campos.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Campos inválidos',
+          text: 'Por favor, ingresa valores válidos en todos los campos.',
+        });
         return;
       }
 
-      // Enviar la solicitud al servidor
-      const response = await fetch('/simulate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          investmentType: type,
-          initialAmount: initialAmount,
-          monthlyContribution: monthlyContribution,
-          duration: duration,
-          rate: 0.07,
-          inflation: 0.02,
-        }),
+      // Mostrar confirmación con SweetAlert
+      const confirm = await Swal.fire({
+        title: '¿Confirmar simulación?',
+        text: '¿Estás seguro de realizar esta simulación?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, continuar',
+        cancelButtonText: 'Cancelar',
       });
 
-      // Manejar la respuesta
-      const results = await response.json();
-      console.log(results);
+      if (confirm.isConfirmed) {
+        try {
+          // Mostrar loader mientras se realiza la solicitud
+          Swal.fire({
+            title: 'Simulando...',
+            text: 'Por favor espera mientras procesamos tu simulación.',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
 
-      // Llamar a la función para renderizar los resultados
-      renderResults(results);
+          // Enviar la solicitud al servidor
+          const response = await fetch('/simulate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              investmentType: type,
+              initialAmount: initialAmount,
+              monthlyContribution: monthlyContribution,
+              duration: duration,
+              rate: 0.07,
+              inflation: 0.02,
+            }),
+          });
+
+          const results = await response.json();
+
+          // Mostrar los resultados con éxito
+          Swal.fire({
+            icon: 'success',
+            title: 'Simulación completa',
+            text: 'Los resultados se han generado correctamente.',
+          });
+
+          // Renderizar los resultados
+          renderResults(results);
+          clearFormFields();
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en la simulación',
+            text: 'Ocurrió un problema al procesar la solicitud.',
+          });
+        }
+      }
     });
   }
 });
+
+
+ // Función para limpiar los campos del formulario
+ function clearFormFields() {
+  document.getElementById('investment-type').value = 'acciones'; // Valor predeterminado
+  document.getElementById('initial-amount').value = '';
+  document.getElementById('monthly-contribution').value = '';
+  document.getElementById('duration').value = '';
+}
+
 
 function renderResults(results) {
   // Mostrar gráfico
