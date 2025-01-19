@@ -18,38 +18,36 @@ body {
 header {
   background-color: $primary-color;
   color: $white-color;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
 
   h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
 main {
-  margin: 2rem;
+  margin: 1rem;
   padding: 1rem;
   background-color: $white-color;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-// Formulario
+
+// Formulario (Mobile-First)
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  // border: 1px solid red;
+  gap: 1rem;
 
   .form-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column; // Columna por defecto en móvil
+    gap: 0.5rem;
 
     .form-group {
-      flex: 1 1 200px; // Asegura flexibilidad con un ancho mínimo de 200px
-
       display: flex;
       flex-direction: column;
 
@@ -59,22 +57,22 @@ form {
       }
 
       input, select {
-        padding: 0.75rem;
+        padding: 0.6rem;
         border: 1px solid $primary-color;
         border-radius: 5px;
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
     }
   }
 
   button {
-    align-self: flex-start;
-    padding: 0.75rem 1.5rem;
+    align-self: stretch; // Botón ocupa todo el ancho en móvil
+    padding: 0.6rem 1rem;
     background-color: $secondary-color;
     color: $white-color;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
 
@@ -83,23 +81,24 @@ form {
     }
   }
 
-  #simulate-btn{
+  #simulate-btn {
     margin: auto;
   }
 }
 
-// Resultados
+// Resultados (Mobile-First)
 #results {
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: $primary-color;
+
   h2 {
     color: $primary-color;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 
   canvas {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     border: 1px solid $accent-color;
     border-radius: 5px;
     background-color: $white-color;
@@ -108,14 +107,14 @@ form {
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     background-color: $white-color;
     border: 1px solid $primary-color;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     th, td {
-      padding: 0.75rem;
+      padding: 0.5rem;
       text-align: center;
+      font-size: 0.8rem;
       border: 1px solid $accent-color;
     }
 
@@ -138,5 +137,97 @@ footer {
 
   p {
     margin: 0;
+  }
+}
+
+@media (min-width: 468px) {
+  header {
+    padding: 1.5rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  main {
+    margin: 2rem;
+    padding: 1.5rem;
+  }
+
+  form {
+    .form-row {
+      flex-direction: row; // Cambia a filas en pantallas más grandes
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      .form-group {
+        flex: 1 1 200px; // Ajusta flexibilidad
+      }
+    }
+
+    button {
+      align-self: flex-start; // Botón alineado a la izquierda
+      font-size: 1rem;
+    }
+  }
+
+  #results h2 {
+    font-size: 1.5rem;
+  }
+
+  #results table th, #results table td {
+    font-size: 1rem; // Aumenta el tamaño de fuente para mayor legibilidad
+  }
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;  // Permite desplazamiento horizontal
+  -webkit-overflow-scrolling: touch; // Mejora la experiencia de desplazamiento en iOS
+  margin-top: 1rem;
+}
+
+#results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: $white-color;
+  border: 1px solid $primary-color;
+
+  th, td {
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 1px solid $accent-color;
+  }
+
+  th {
+    background-color: $primary-color;
+    color: $white-color;
+  }
+
+  td {
+    background-color: $background-color;
+  }
+}
+
+// Asegúrate de que la tabla tenga suficiente ancho para desbordarse en pantallas pequeñas
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: scroll;  // Habilita desplazamiento horizontal específicamente en móviles
+  }
+}
+
+#investment-chart {
+  width: 400px;
+  height: 200px;
+
+  // Ajustar el tamaño en pantallas móviles
+  @media (max-width: 768px) {
+    width: 100%;  // Se ajusta al 100% del ancho disponible
+    height: 150px; // Reduce la altura en pantallas móviles
+  }
+  
+  @media (max-width: 480px) {
+    height: 120px; // Aún más pequeño en pantallas muy pequeñas
   }
 }

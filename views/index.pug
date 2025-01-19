@@ -6,6 +6,8 @@ html
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css")
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
     script(src='https://cdn.jsdelivr.net/npm/chart.js')
     script(src='/styles/scripts/main.js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -26,7 +28,7 @@ html
                 option(value='criptomonedas') Criptomonedas
             .form-group
               label(for='initial-amount') Monto Inicial
-              input#initial-amount(type='number', name='initialAmount', placeholder='Monto inicial')
+              input#initial-amount(type='number', name='initialAmount', placeholder='Monto Inicial')
             .form-group
               label(for='rate-percentage') Porcentaje de Rendimiento
               input#rate-percentage(type='number', name='ratePercentage', placeholder='Porcentaje (%)', min='0', step='0.01')
@@ -34,7 +36,7 @@ html
           .form-row
             .form-group
               label(for='monthly-contribution') Monto de la Aportación
-              input#monthly-contribution(type='number', name='monthlyContribution', placeholder='Monto de la aportación')
+              input#monthly-contribution(type='number', name='monthlyContribution', placeholder='Aportación')
             .form-group
               label(for='contribution-type') Tipo de Aportación
               select#contribution-type(name='contributionType')
@@ -55,15 +57,16 @@ html
         section#results
           h2 Resultados de la Simulación
           canvas#investment-chart(width='400', height='200')
-          table#results-table
-            thead
-              tr
-                th Tipo de Inversión
-                th Monto Inicial
-                th Aportaciones Totales
-                th Rendimiento Total
-                th Valor Final
-                th Tasa Anualizada
-            tbody
+          div.table-container
+            table#results-table
+              thead
+                tr
+                  th Tipo de Inversión
+                  th Monto Inicial
+                  th Aportaciones Totales
+                  th Rendimiento Total
+                  th Valor Final
+                  th Tasa Anualizada TRA 
+              tbody
       footer
         p © 2025 Simulador de Inversiones

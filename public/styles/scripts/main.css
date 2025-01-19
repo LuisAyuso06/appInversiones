@@ -9,34 +9,33 @@ body {
 header {
   background-color: #1E3A8A;
   color: #ffffff;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
 }
 header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 main {
-  margin: 2rem;
+  margin: 1rem;
   padding: 1rem;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 form .form-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 form .form-row .form-group {
-  flex: 1 1 200px;
   display: flex;
   flex-direction: column;
 }
@@ -45,19 +44,19 @@ form .form-row .form-group label {
   margin-bottom: 0.5rem;
 }
 form .form-row .form-group input, form .form-row .form-group select {
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: 1px solid #1E3A8A;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 form button {
-  align-self: flex-start;
-  padding: 0.75rem 1.5rem;
+  align-self: stretch;
+  padding: 0.6rem 1rem;
   background-color: #2563EB;
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -66,16 +65,16 @@ form #simulate-btn {
 }
 
 #results {
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: #1E3A8A;
 }
 #results h2 {
   color: #1E3A8A;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 #results canvas {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   border: 1px solid #60A5FA;
   border-radius: 5px;
   background-color: #ffffff;
@@ -83,14 +82,14 @@ form #simulate-btn {
 #results table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background-color: #ffffff;
   border: 1px solid #1E3A8A;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 #results table th, #results table td {
-  padding: 0.75rem;
+  padding: 0.5rem;
   text-align: center;
+  font-size: 0.8rem;
   border: 1px solid #60A5FA;
 }
 #results table th {
@@ -109,6 +108,84 @@ footer {
 }
 footer p {
   margin: 0;
+}
+
+@media (min-width: 468px) {
+  header {
+    padding: 1.5rem;
+  }
+  header h1 {
+    font-size: 2rem;
+  }
+  main {
+    margin: 2rem;
+    padding: 1.5rem;
+  }
+  form .form-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  form .form-row .form-group {
+    flex: 1 1 200px;
+  }
+  form button {
+    align-self: flex-start;
+    font-size: 1rem;
+  }
+  #results h2 {
+    font-size: 1.5rem;
+  }
+  #results table th, #results table td {
+    font-size: 1rem;
+  }
+}
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1rem;
+}
+
+#results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid #1E3A8A;
+}
+#results-table th, #results-table td {
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  border: 1px solid #60A5FA;
+}
+#results-table th {
+  background-color: #1E3A8A;
+  color: #ffffff;
+}
+#results-table td {
+  background-color: #F3F4F6;
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: scroll;
+  }
+}
+#investment-chart {
+  width: 400px;
+  height: 200px;
+}
+@media (max-width: 768px) {
+  #investment-chart {
+    width: 100%;
+    height: 150px;
+  }
+}
+@media (max-width: 480px) {
+  #investment-chart {
+    height: 120px;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
