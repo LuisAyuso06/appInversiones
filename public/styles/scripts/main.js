@@ -1,3 +1,7 @@
+// Este código configura eventos para una simulación de inversión, que incluye
+// la validación de entradas, la confirmación del usuario, el envío de datos al servidor
+// y la visualización de resultados.
+
 document.addEventListener('DOMContentLoaded', () => {
   const simulateButton = document.getElementById('simulate-btn');
   if (simulateButton) {
@@ -12,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const durationType = document.getElementById('duration-type').value;
       const duration = parseInt(document.getElementById('duration').value);
       const ratePercentage = parseFloat(document.getElementById('rate-percentage').value) / 100; // Convertir a decimal
-      const inflationPercentage = parseFloat(document.getElementById('inflation-percentage').value) /100; 
-      
+      const inflationPercentage = parseFloat(document.getElementById('inflation-percentage').value) / 100;
+
       // Verificar que todos los campos son válidos
-      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration) || isNaN(ratePercentage)|| isNaN(inflationPercentage)) {
+      if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(duration) || isNaN(ratePercentage) || isNaN(inflationPercentage)) {
         Swal.fire({
           icon: 'error',
           title: 'Campos inválidos',
@@ -60,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
               durationType: durationType,
               duration: duration,
               rate: ratePercentage, // Enviar el porcentaje de rendimiento
-              inflation:inflationPercentage,
+              inflation: inflationPercentage,
             }),
           });
 
@@ -79,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
           Swal.fire({
             icon: 'error',
-            title: 'Error en la simulación'+ error,
+            title: 'Error en la simulación' + error,
             text: 'Ocurrió un problema al procesar la solicitud.',
           });
         }
@@ -88,10 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
-
- // Función para limpiar los campos del formulario
- function clearFormFields() {
+// Función para limpiar los campos del formulario
+function clearFormFields() {
   document.getElementById('investment-type').value = 'acciones'; // Valor predeterminado
   document.getElementById('initial-amount').value = '';
   document.getElementById('monthly-contribution').value = '';
@@ -100,11 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inflation-percentage').value = '';
 }
 
-
+// Función para renderizar los resultados
 function renderResults(results) {
   // Mostrar gráfico
   const ctx = document.getElementById('investment-chart').getContext('2d');
-  
+
   // Verificar si ya existe un gráfico, y destruirlo si es necesario
   if (window.myChart) {
     window.myChart.destroy(); // Destruir el gráfico anterior
